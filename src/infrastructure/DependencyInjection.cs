@@ -35,11 +35,11 @@ namespace infrastructure
                   configuration["apikey-mini"],
                    "o4-mini",
                    "o4-mini");
-                var embeddingGenerator = kernelBuilder.Services.BuildServiceProvider()
-   .GetRequiredService<IEmbeddingGenerator<string, Embedding<float>>>();
+                 // var embeddingGenerator = kernelBuilder.Services.BuildServiceProvider()
+                 //.GetRequiredService<IEmbeddingGenerator<string, Embedding<float>>>();
                 kernelBuilder.Services.AddRedisVectorStore(configuration.GetConnectionString("redis"),new()
                 {
-                    EmbeddingGenerator= embeddingGenerator,
+                    //EmbeddingGenerator= embeddingGenerator,
                 });
                 kernelBuilder.Services.AddTransient<IVectorService, VectorService>();
                 return kernelBuilder.Build();

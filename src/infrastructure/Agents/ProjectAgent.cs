@@ -30,9 +30,12 @@ namespace infrastructure.Agents
             string agentReply = string.Empty;
             var agent = base.GetAzureAgent(configuration["ProductAgentId"]);
             AgentThread thread = new AzureAIAgentThread(agent.Item2);
-            using var textSearchStore = new TextSearchStore<string>(vectorStore, collectionName: "product-text", vectorDimensions: 3072);
+
+            //Giving agent access to the vector store
+            var textSearchStore = new VectorStoreTextSearch<ProductVectorModel>(vectorStore.GetCollection<string, ProductVectorModel>("productsv"), embedder, new ProductVectorModelStringMapper(), new ProductVectorModelTextSearchResultMapper());
             var textSearchProvider = new TextSearchProvider(textSearchStore);
             thread.AIContextProviders.Add(textSearchProvider);
+
             ChatMessageContent chatMessageContent = new(AuthorRole.User, message);
             await foreach (ChatMessageContent response in agent.Item1.InvokeAsync(chatMessageContent, thread))
             {

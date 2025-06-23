@@ -16,23 +16,12 @@ namespace infrastructure.vector
     {
         public async Task SaveAsync(ProductModel productModel)
         {
-            
-            //var embeddingGenerator = kernel.GetRequiredService<IEmbeddingGenerator<string, Embedding<float>>>();
             var vector = await embeddingGenerator.GenerateVectorAsync(productModel.Description, new EmbeddingGenerationOptions { Dimensions = 3072 });
             var collection = vectorStore.GetCollection<string, ProductVectorModel>("productsv");
             await collection.EnsureCollectionExistsAsync();
-            var vectorModel = ToVectorModel(productModel, vector);
-            await collection.UpsertAsync(vectorModel);
-            await SaveTextStore(productModel.Description);
+            var vectorModel = ToVectorModel(productModel, vector);          
+            await collection.UpsertAsync(vectorModel); 
         }
-
-        //For Agentic Rag
-        private async Task SaveTextStore(string description)
-        {
-            using var textSearchStore = new TextSearchStore<string>(vectorStore, collectionName: "product-text", vectorDimensions: 3072);
-            await textSearchStore.UpsertTextAsync([description]);
-        }
-
         private ProductVectorModel ToVectorModel(ProductModel productModel, ReadOnlyMemory<float> vector)
         {
             ProductVectorModel vectorModel = new()
