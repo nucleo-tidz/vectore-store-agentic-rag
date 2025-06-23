@@ -1,5 +1,7 @@
-﻿using infrastructure.Repository;
+﻿using infrastructure.Agents;
+using infrastructure.Repository;
 using infrastructure.vector;
+using Microsoft.Extensions.AI;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.SemanticKernel;
@@ -13,7 +15,8 @@ namespace infrastructure
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddTransient<IProductRepository, ProductRepository>()
-                .AddSemanticKernel(configuration);
+                .AddSemanticKernel(configuration).
+                AddTransient<IProjectAgent, ProjectAgent>();
 
             return services;
         }
@@ -22,6 +25,7 @@ namespace infrastructure
             return services.AddTransient<Kernel>(serviceProvider =>
             {
                 IKernelBuilder kernelBuilder = Kernel.CreateBuilder();
+            
                 kernelBuilder.AddAzureOpenAIEmbeddingGenerator
                 (deploymentName: "text-embedding-3-large", endpoint: configuration["foundry-endpoint-embedder"],
                 apiKey: configuration["apikey-embedder"]);
@@ -30,8 +34,13 @@ namespace infrastructure
                   configuration["foundry-endpoint-mini"],
                   configuration["apikey-mini"],
                    "o4-mini",
-                   "o4-mini")
-                .AddRedisVectorStore("localhost:6379");
+                   "o4-mini");
+                var embeddingGenerator = kernelBuilder.Services.BuildServiceProvider()
+   .GetRequiredService<IEmbeddingGenerator<string, Embedding<float>>>();
+                kernelBuilder.Services.AddRedisVectorStore(configuration.GetConnectionString("redis"),new()
+                {
+                    EmbeddingGenerator= embeddingGenerator,
+                });
                 kernelBuilder.Services.AddTransient<IVectorService, VectorService>();
                 return kernelBuilder.Build();
             });
