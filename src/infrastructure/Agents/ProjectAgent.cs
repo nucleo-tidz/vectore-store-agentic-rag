@@ -32,13 +32,10 @@ namespace infrastructure.Agents
             var agent = base.GetAzureAgent(configuration["ProductAgentId"]);
             AgentThread thread = new AzureAIAgentThread(agent.Item2);
 
-            //Giving agent access to the vector store
             var vectorSearchStore = new VectorStoreTextSearch<ProductVectorModel>(vectorStore.GetCollection<string, ProductVectorModel>("productsv"), embedder, new ProductVectorModelStringMapper(), new ProductVectorModelTextSearchResultMapper());
+            using var textSearchStore = new TextSearchStore<string>(vectorStore, collectionName: "product-desc", vectorDimensions: 3072);
             var vectorSearchProvider = new TextSearchProvider(vectorSearchStore);
-
-            var textSearchProvider = new TextSearchProvider(
-                new TextSearchStore<string>(vectorStore, collectionName: "personal-data", vectorDimensions: 3072));
-
+            var textSearchProvider = new TextSearchProvider(textSearchStore);
             thread.AIContextProviders.Add(vectorSearchProvider);
             thread.AIContextProviders.Add(textSearchProvider);
             ChatMessageContent chatMessageContent = new(AuthorRole.User, message);

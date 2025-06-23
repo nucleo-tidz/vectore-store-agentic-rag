@@ -27,15 +27,15 @@ namespace infrastructure.vector
                         EmbeddingGenerator = embeddingGenerator,
                     });
 
-            using var textSearchStore = new TextSearchStore<string>(vectorStore, collectionName: "personal-data", vectorDimensions: 3072, new()
-            { SearchNamespace = "group/personal" });
+            using var textSearchStore = new TextSearchStore<string>(vectorStore, collectionName: "product-desc", vectorDimensions: 3072, new()
+            { SearchNamespace = "group/desc" });
             
             await textSearchStore.UpsertDocumentsAsync(Chunk());
         }
         private IEnumerable<TextSearchDocument> Chunk()
         {
             var result = new List<TextSearchDocument>();
-            string data = File.ReadAllText("C:\\Personal-Workspace\\agentic-rag\\src\\Files\\Ahmar.txt");
+            string data = File.ReadAllText("C:\\Personal-Workspace\\agentic-rag\\src\\Files\\product.txt");
             IEnumerable<string> chunks = TextChunker.SplitPlainTextLines(data, 50);
             foreach (string chunk in chunks)
             {
@@ -45,7 +45,7 @@ namespace infrastructure.vector
                     Text = chunk,
                     
                     Namespaces = ["group/personal"],
-                    SourceLink= "C:\\Personal-Workspace\\agentic-rag\\src\\Files\\Ahmar.txt",
+                    SourceLink= "C:\\Personal-Workspace\\agentic-rag\\src\\Files\\product.txt",
                     SourceName = "Ahmar.txt"
                 });
             }
