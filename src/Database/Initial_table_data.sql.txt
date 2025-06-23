@@ -1,0 +1,18 @@
+CREATE TABLE [dbo].[Product](
+	[Id] [int] NOT NULL,
+	[Name] [nvarchar](100) NOT NULL,
+	[Description] [nvarchar](max) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+INSERT [dbo].[Product] ([Id], [Name], [Description]) VALUES (1, N'Chair', N'An ergonomic office chair with adjustable lumbar support, breathable mesh back, and cushioned seat designed to reduce fatigue during long working hours. Ideal for home offices and corporate setups, promoting posture alignment and all-day comfort.')
+GO
+INSERT [dbo].[Product] ([Id], [Name], [Description]) VALUES (2, N'Headphones', N'Premium over-ear noise-cancelling headphones designed to deliver immersive audio with deep bass and crystal-clear highs. Features include Bluetooth connectivity, built-in microphone for calls, and long-lasting battery life ideal for travel, work, and music enthusiasts seeking isolation and comfort.')
+GO
+INSERT [dbo].[Product] ([Id], [Name], [Description]) VALUES (3, N'Camping Tent', N'A durable and weather-resistant 4-person camping tent designed for quick setup and reliable shelter in all seasons. Features include a waterproof rainfly, breathable mesh windows for ventilation, and a sturdy frame that withstands wind and rain. Ideal for weekend camping trips, hiking expeditions, and family outdoor adventures')
+GO
+INSERT [dbo].[Product] ([Id], [Name], [Description]) VALUES (4, N'earbuds', N'Compact true wireless earbuds with active noise cancellation, delivering high-quality stereo sound and deep bass in a lightweight, ergonomic design. Features include Bluetooth 5.3 connectivity, touch controls, voice assistant support, and a pocket-sized charging case with up to 30 hours of battery life')
+GO

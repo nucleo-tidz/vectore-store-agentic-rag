@@ -14,5 +14,8 @@
 	<PackageReference Include="Microsoft.SemanticKernel" Version="1.57.0" />
 	<PackageReference Include="Microsoft.SemanticKernel.Connectors.Redis" Version="1.57.0-preview" />
 	</ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\model\model.csproj" />
+	</ItemGroup>
 
 </Project>
