@@ -5,12 +5,7 @@ using Microsoft.SemanticKernel.Connectors.Redis;
 using Microsoft.SemanticKernel.Data;
 using Microsoft.SemanticKernel.Text;
 using StackExchange.Redis;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace infrastructure.vector
 {
@@ -43,7 +38,6 @@ namespace infrastructure.vector
                 result.Add(new TextSearchDocument
                 {
                     Text = chunk,
-                    
                     Namespaces = ["group/personal"],
                     SourceLink= "C:\\Personal-Workspace\\agentic-rag\\src\\Files\\product.txt",
                     SourceName = "Ahmar.txt"
