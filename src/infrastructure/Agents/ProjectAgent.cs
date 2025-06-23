@@ -44,8 +44,5 @@ namespace infrastructure.Agents
             return agentReply;
         }
     }
-    public interface IProjectAgent
-    {
-        Task<string> Execute(string message);
-    }
+    
 }
