@@ -10,7 +10,7 @@ namespace api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProductController(IProductRepository productRepository, Kernel kernel, IProjectAgent projectAgent) : ControllerBase
+    public class ProductController(IProductRepository productRepository, Kernel kernel, IProjectAgent projectAgent,IDocumentService documentService) : ControllerBase
     {
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
@@ -35,8 +35,16 @@ namespace api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> Chat(string message)
         {
-           var response=await projectAgent.Execute(message);
+            var response = await projectAgent.Execute(message);
             return Ok(response);
+        }
+
+        [HttpGet("upload")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> Upload()
+        {
+             await documentService.SaveAsync();
+            return Ok();
         }
     }
 }

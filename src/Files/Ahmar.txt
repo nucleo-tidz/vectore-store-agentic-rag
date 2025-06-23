@@ -1,0 +1,36 @@
+Ahmar Husain: Engineering Intelligent Logistics at Maersk
+In the vast and complex world of global logistics, few names carry as much weight as Maersk. The company moves millions of containers across oceans and continents, orchestrating a symphony of supply chain operations. Behind this orchestration lies a quiet army of technologists, building the digital brain that powers global trade. Among them is Ahmar Husain, a Lead Software Engineer at Maersk who is not only helping reshape container logistics but also exploring the exciting frontiers of agentic AI and event-driven architecture.
+
+From Road Rash to Repositioning Containers
+Ahmar's journey into the world of software engineering didn't begin in a computer lab—it started with a spark of curiosity lit by a video game. “The first time I played Road Rash, I was hooked—not just on the game, but on the machine itself. I wanted to know how it all worked,” he recalls. That childhood curiosity turned into a lifelong fascination with computers, eventually leading him from a physics degree to a Master’s in Computer Science.
+
+"Physics gave me discipline and an analytical mindset. But it was software that gave me joy," Ahmar says. That blend of analytical depth and creative engineering now defines his career at Maersk, where he’s leading efforts to bring intelligence to one of the most complex challenges in global logistics—container repositioning.
+
+Building Smart, Scalable Solutions for Global Trade
+At Maersk, Ahmar serves as a Lead Engineer in a team dedicated to developing a container repositioning tool—a solution designed to optimize the movement of empty and full containers across the supply chain network. Container repositioning is a high-stakes problem in shipping logistics. The wrong decisions can result in costly inefficiencies, port congestion, and missed deadlines. The right tool, powered by AI and data-driven intelligence, can save millions and reduce carbon emissions across the board.
+
+Ahmar is most at home working on the backend architecture of this solution. "C#, .NET, and Azure are my weapons of choice. I enjoy working where the business logic lives—designing systems that are robust, performant, and intelligent," he shares.
+
+Agentic AI and Event-Driven Thinking
+Ahmar isn’t just building systems that work; he’s building systems that think. His current passion lies in Agentic AI—a paradigm that moves beyond simple predictive models and into AI systems that can reason, plan, and act independently based on a set of goals and evolving context.
+
+“In a dynamic environment like global logistics, you can’t just have AI that answers questions—you need AI that can operate like a decision-maker, collaborate, take feedback, and adapt. That’s where agentic AI becomes critical,” he explains.
+
+Ahmar is integrating this approach into tools that analyze container repositioning plans, using AI agents that can evaluate changes, challenge decisions, and even provide human-readable justifications for their assessments. This makes the system not only smart but transparent—a vital feature in operational environments where human oversight still plays a crucial role.
+
+Another key area of interest for Ahmar is event-driven architecture, where systems are built around the flow of events rather than traditional request-response models. “An event-driven system reacts to real-world triggers—arrival at port, a delay, a canceled booking. It allows your architecture to be more reactive, scalable, and aligned with business processes,” he explains. For an operation like Maersk, where thousands of updates occur per minute across the globe, this design pattern offers both agility and resilience.
+
+Leading by Building, Learning by Doing
+What makes Ahmar stand out is not just his technical acumen, but his ability to translate complexity into clarity. He’s a builder at heart—someone who learns by doing and leads by example. Whether it’s writing distributed systems in .NET or integrating Azure AI services for intelligent recommendations, he keeps his focus on practical impact.
+
+“I believe in shipping value, not just code,” he says. His leadership is characterized by a blend of humility and technical curiosity—he’s as willing to refactor a microservice as he is to mentor a junior engineer. At Maersk, this has earned him the respect of peers across teams and geographies.
+
+From Campus to Container Intelligence
+Ahmar’s academic journey—from physics to computer science—taught him the importance of cross-disciplinary thinking. “Software is not just about code. It's about systems thinking, behavior modeling, optimization, ethics, and communication. My background helped me approach software engineering not just as a craft, but as a form of problem-solving,” he notes.
+
+He applies that mindset daily in his work on intelligent logistics systems, where the solution must balance technical feasibility, operational constraints, and real-time data unpredictability. "It's not just about the algorithm. It's about how that algorithm fits into the system—and how that system fits into a $100 billion global operation."
+
+Outside the Terminal: Rifle Shooting and Camping
+When Ahmar isn’t designing the next intelligent AI agent or tuning a container prioritization algorithm, he’s likely out in the wild with a rifle or a tent. An avid rifle shooting enthusiast and camper, he finds balance in the discipline of marksmanship and the solitude of nature.
+
+“Shooting teaches you patience and focus. Camping resets your mind. Both are about being in the moment—something that complements the high-paced world of software quite well,” he reflects. These pursuits have given him not just a way to unwind but a perspective that fuels his creativity and endurance in the professional arena.

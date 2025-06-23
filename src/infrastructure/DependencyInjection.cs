@@ -16,9 +16,8 @@ namespace infrastructure
         {
             services.AddTransient<IProductRepository, ProductRepository>()
                 .AddSemanticKernel(configuration).
-                AddTransient<IProjectAgent, ProjectAgent>();
-
-            return services;
+                AddTransient<IProjectAgent, ProjectAgent>().AddTransient<IDocumentService, DocumentService>();
+                        return services;
         }
         public static IServiceCollection AddSemanticKernel(this IServiceCollection services, IConfiguration configuration)
         {
@@ -42,6 +41,7 @@ namespace infrastructure
                     //EmbeddingGenerator= embeddingGenerator,
                 });
                 kernelBuilder.Services.AddTransient<IVectorService, VectorService>();
+            
                 return kernelBuilder.Build();
             });
         }
