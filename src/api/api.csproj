@@ -21,9 +21,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\infrastructure\infrastructure.csproj" />
-    <ProjectReference Include="..\..\model\model.csproj" />
-    <ProjectReference Include="..\..\service\service.csproj" />
+    <ProjectReference Include="..\infrastructure\infrastructure.csproj" />
+    <ProjectReference Include="..\model\model.csproj" />
   </ItemGroup>
 
 </Project>
