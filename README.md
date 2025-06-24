@@ -5,7 +5,7 @@ This project is a C#-based Retrieval-Augmented Generation (RAG) system using [Se
 ## 🚀 Features
 
 - Extract and chunk text content of a documnet
-- Generate vector embeddings using Azure OpenAI (`text-embedding-3-large`)
+- Generate vector embeddings using Azure OpenAI
 - Store and search vectors using Redis Vector Store
 - Semantic search over products and documents
 - Agentic interaction using Azure AI agents and context providers
