@@ -5,12 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.Agents;
 using Microsoft.SemanticKernel.Agents.AzureAI;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace infrastructure.Agents
 {
@@ -20,7 +15,6 @@ namespace infrastructure.Agents
         public (Agent, PersistentAgentsClient) GetAzureAgent(string agentId)
         {
             //DO NO USE THIS CODE IN PRODUCTION. USE RBAC INSTEAD FOR AUTHENTICATION
-
             AIProjectClient projectClient = new AIProjectClient(new Uri(configuration["AgentProjectEndpoint"]), new DefaultAzureCredential(
                 new DefaultAzureCredentialOptions
                 {

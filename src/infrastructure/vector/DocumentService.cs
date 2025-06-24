@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.AI;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.VectorData;
 using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.Connectors.Redis;
 using Microsoft.SemanticKernel.Data;
@@ -10,18 +11,10 @@ using System.Diagnostics.CodeAnalysis;
 namespace infrastructure.vector
 {
     [Experimental("Ahmar")]
-    public class DocumentService(Kernel kernel, IConfiguration configuration) : IDocumentService
+    public class DocumentService(VectorStore vectorStore) : IDocumentService
     {
         public async Task SaveAsync()
         {
-           var embeddingGenerator= kernel.GetRequiredService<IEmbeddingGenerator<string, Embedding<float>>>();
-            var vectorStore =
-                new RedisVectorStore(
-                    ConnectionMultiplexer.Connect(configuration.GetConnectionString("redis")).GetDatabase(), new()
-                    {
-                        EmbeddingGenerator = embeddingGenerator,
-                    });
-
             using var textSearchStore = new TextSearchStore<string>(vectorStore, collectionName: "product-desc", vectorDimensions: 3072, new()
             { SearchNamespace = "group/desc" });
             

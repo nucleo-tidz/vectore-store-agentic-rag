@@ -39,6 +39,7 @@ namespace infrastructure.Agents
             thread.AIContextProviders.Add(vectorSearchProvider);
             thread.AIContextProviders.Add(textSearchProvider);
             ChatMessageContent chatMessageContent = new(AuthorRole.User, message);
+           
             await foreach (ChatMessageContent response in agent.Item1.InvokeAsync(chatMessageContent, thread))
             {
                 agentReply = agentReply + response.Content;
