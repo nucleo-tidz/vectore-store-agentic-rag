@@ -10,7 +10,7 @@ namespace api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProductController( Kernel kernel, IProjectAgent projectAgent) : ControllerBase
+    public class ShipmentController( Kernel kernel, IProjectAgent projectAgent) : ControllerBase
     {
        
         [HttpGet("chat/{message}")]
