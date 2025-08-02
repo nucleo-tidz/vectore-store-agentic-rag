@@ -13,46 +13,14 @@ BaseCost = ContainerVolume × BaseRatePerCBM
 Rule 2: High-Density Surcharge
 If the GrossWeight (in kg) divided by ContainerVolume Volume  exceeds 250, add a 10% surcharge on the base cost.
 
-Rule 3: Hazardous Material Fee
+Rule 3: Hazardous Material 
 If the cargo is marked as hazardous, add a flat fee of ₹1500 to the total cost.
 
 Rule 4: Route Fuel Multiplier
 For routes labeled as "FuelSensitive", multiply flat fee of 1.15 to the total cost.
 
-Rule 5: Special Handling Fee
-If SpecialHandling is required, add ₹500 per container.
+Rule 5: SpecialHandling fee
+If the cargo the cargo is marked for SpecialHandling  add  a flat fee of ₹500 per container.
 
-Rule 6: Discount for Green Certified Routes
+Rule 6: Discount for GreenCertified Routes
 If the route is marked as "GreenCertified", apply a 5% discount to the final cost.
-------------------------------------------------------------------------------------------
-Example of Calculation
-
-Inputs
-- ContainerVolume = 50.3 CBM
-- GrossWeight = 6500 kg
-- Hazardous = no
-- Route = FuelSensitive
-- SpecialHandling = no
-- BaseRatePerCBM = ₹1001
-
-Calculation
-
-Should result in a final calculated cost using all applicable rules.
-Step 1: Base Cost
-BaseCost = 50.3 × ₹1001 = ₹50,350.30
-
-Step 2: Density Check
-Density = 6500 ÷ 50.3 = 129.2 (which is < 250)
-No high-density surcharge
-
-Step 3: Hazardous Check
-Hazardous = No →  No fee
-
-Step 4: Special Handling Check
-SpecialHandling = No → No fee
-
-Step 5: FuelSensitive Route Multiplier
-CostAfterFuel = ₹50,350.30 × 1.15 = ₹57,902.84
-
-Step 6: GreenCertified Discount
-Not applicable → No discount
