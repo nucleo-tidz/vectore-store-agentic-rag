@@ -23,7 +23,7 @@ namespace infrastructure.vector
         private IEnumerable<TextSearchDocument> Chunk()
         {
             var result = new List<TextSearchDocument>();
-            string data = File.ReadAllText("C:\\Personal-Workspace\\agentic-rag\\src\\Files\\product.txt");
+            string data = File.ReadAllText("C:\\Workspace\\nucleo-tidz\\agentic-rag\\src\\Files\\product.txt");
             IEnumerable<string> chunks = TextChunker.SplitPlainTextLines(data, 50);
             foreach (string chunk in chunks)
             {
@@ -32,7 +32,7 @@ namespace infrastructure.vector
                 {
                     Text = chunk,
                     Namespaces = ["group/personal"],
-                    SourceLink= "C:\\Personal-Workspace\\agentic-rag\\src\\Files\\product.txt",
+                    SourceLink= "C:\\Workspace\\nucleo-tidz\\agentic-rag\\src\\Files\\product.txt",
                     SourceName = "Ahmar.txt"
                 });
             }

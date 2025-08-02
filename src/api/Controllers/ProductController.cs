@@ -10,7 +10,7 @@ namespace api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProductController(IProductRepository productRepository, Kernel kernel, IProjectAgent projectAgent,IDocumentService documentService) : ControllerBase
+    public class ProductController(IProductRepository productRepository, Kernel kernel, IProjectAgent projectAgent) : ControllerBase
     {
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
@@ -43,7 +43,8 @@ namespace api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> Upload()
         {
-             await documentService.SaveAsync();
+            var documentService = kernel.Services.GetRequiredService<IDocumentService>();
+            await documentService.SaveAsync();
             return Ok();
         }
     }
