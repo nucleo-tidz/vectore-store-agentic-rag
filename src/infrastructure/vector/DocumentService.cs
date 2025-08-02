@@ -11,8 +11,8 @@ namespace infrastructure.vector
     {
         public async Task SaveAsync(string content)
         {
-            using var textSearchStore = new TextSearchStore<string>(vectorStore, collectionName: "calculation-formula", vectorDimensions: 3072, new()
-            { SearchNamespace = "calculation/desc" });
+            using var textSearchStore = new TextSearchStore<string>(vectorStore, collectionName: "calculation-formulas", vectorDimensions: 3072, new()
+            { SearchNamespace = "calculation/rules" });
             
             await textSearchStore.UpsertDocumentsAsync(Chunk(content));
         }
@@ -26,9 +26,9 @@ namespace infrastructure.vector
                 result.Add(new TextSearchDocument
                 {
                     Text = chunk,
-                    Namespaces = ["calculation/desc"],
-                    SourceLink= "Calculation.txt",
-                    SourceName = "Calculation.txt"
+                    Namespaces = ["calculation/rules"],
+                    SourceLink= "Load Calculation.txt",
+                    SourceName = "Load Calculation.txt"
                 });
             }
             return result;

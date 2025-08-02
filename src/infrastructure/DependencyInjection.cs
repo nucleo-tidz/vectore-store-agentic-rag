@@ -30,11 +30,11 @@ namespace infrastructure
                 (deploymentName: "text-embedding-3-large", endpoint: configuration["foundry-endpoint-embedder"],
                 apiKey: configuration["apikey-embedder"]);
 
-                kernelBuilder.Services.AddAzureOpenAIChatCompletion("o4-mini",
+                kernelBuilder.Services.AddAzureOpenAIChatCompletion("gpt-4.1",
                   configuration["foundry-endpoint-mini"],
                   configuration["apikey-mini"],
-                   "o4-mini",
-                   "o4-mini");
+                   "gpt-4.1",
+                   "gpt-4.1");
                
                 kernelBuilder.Services.AddRedisVectorStore(configuration.GetConnectionString("redis"),new()
                 {
