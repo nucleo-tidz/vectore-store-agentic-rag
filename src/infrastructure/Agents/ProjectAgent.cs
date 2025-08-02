@@ -1,18 +1,15 @@
-﻿using infrastructure.vector;
+﻿using System.Diagnostics.CodeAnalysis;
+
 using Microsoft.Extensions.AI;
-using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.VectorData;
 using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.Agents;
 using Microsoft.SemanticKernel.Agents.AzureAI;
 using Microsoft.SemanticKernel.ChatCompletion;
 using Microsoft.SemanticKernel.Connectors.Redis;
 using Microsoft.SemanticKernel.Data;
-using Microsoft.SemanticKernel.Text;
-using OpenAI.VectorStores;
+
 using StackExchange.Redis;
-using System.Diagnostics.CodeAnalysis;
 
 namespace infrastructure.Agents
 {
@@ -30,21 +27,15 @@ namespace infrastructure.Agents
                     });
             string agentReply = string.Empty;
             var agent = base.GetAzureAgent(configuration["ProductAgentId"]);
-            AgentThread thread = new AzureAIAgentThread(agent.Item2);
-
-            var vectorSearchStore = new VectorStoreTextSearch<ProductVectorModel>(vectorStore.GetCollection<string, ProductVectorModel>("productsv"), embedder, new ProductVectorModelStringMapper(), new ProductVectorModelTextSearchResultMapper());
-            using var textSearchStore = new TextSearchStore<string>(vectorStore, collectionName: "product-desc", vectorDimensions: 3072);
-            var vectorSearchProvider = new TextSearchProvider(vectorSearchStore);
-            var textSearchProvider = new TextSearchProvider(textSearchStore);
-            thread.AIContextProviders.Add(vectorSearchProvider);
+            AgentThread thread = new AzureAIAgentThread(agent.Item2);         
+            using var textSearchStore = new TextSearchStore<string>(vectorStore, collectionName: "calculation-formulas", vectorDimensions: 3072);
+            var textSearchProvider = new TextSearchProvider(textSearchStore);      
             thread.AIContextProviders.Add(textSearchProvider);
-            ChatMessageContent chatMessageContent = new(AuthorRole.User, message);
-           
+            ChatMessageContent chatMessageContent = new(AuthorRole.User, message);           
             await foreach (ChatMessageContent response in agent.Item1.InvokeAsync(chatMessageContent, thread))
             {
                 agentReply = agentReply + response.Content;
             }
-       
             return agentReply;
         }
     }
