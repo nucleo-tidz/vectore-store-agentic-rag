@@ -18,7 +18,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\infrastructure\infrastructure.csproj" />
-    <ProjectReference Include="..\model\model.csproj" />
   </ItemGroup>
 
 </Project>

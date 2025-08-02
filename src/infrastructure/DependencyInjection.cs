@@ -1,11 +1,12 @@
-﻿using infrastructure.Agents;
-using infrastructure.Repository;
+﻿using System.Diagnostics.CodeAnalysis;
+
+using infrastructure.Agents;
 using infrastructure.vector;
+
 using Microsoft.Extensions.AI;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.SemanticKernel;
-using System.Diagnostics.CodeAnalysis;
 
 namespace infrastructure
 {
@@ -14,7 +15,7 @@ namespace infrastructure
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddTransient<IProductRepository, ProductRepository>()
+            services
                 .AddSemanticKernel(configuration).
                 AddTransient<IProjectAgent, ProjectAgent>();               
                return services;
@@ -38,8 +39,7 @@ namespace infrastructure
                 kernelBuilder.Services.AddRedisVectorStore(configuration.GetConnectionString("redis"),new()
                 {
                     EmbeddingGenerator= kernelBuilder.Services.BuildServiceProvider().GetRequiredService<IEmbeddingGenerator<string, Embedding<float>>>(),
-                });
-                kernelBuilder.Services.AddTransient<IVectorService, VectorService>();
+                });        
                 kernelBuilder.Services.AddTransient<IDocumentService, DocumentService>();
                 return kernelBuilder.Build();
             });
