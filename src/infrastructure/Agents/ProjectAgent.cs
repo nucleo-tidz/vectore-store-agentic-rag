@@ -27,9 +27,20 @@ namespace infrastructure.Agents
                     });
             string agentReply = string.Empty;
             var agent = base.GetAzureAgent(configuration["ProductAgentId"]);
-            AgentThread thread = new AzureAIAgentThread(agent.Item2);         
-            using var textSearchStore = new TextSearchStore<string>(vectorStore, collectionName: "calculation-formulas", vectorDimensions: 3072);
-            var textSearchProvider = new TextSearchProvider(textSearchStore);      
+            AgentThread thread = new AzureAIAgentThread(agent.Item2);
+
+            TextSearchStoreOptions searchOptions = new TextSearchStoreOptions
+            {
+                SearchNamespace= "calculation/rules",
+                
+            };
+            using var textSearchStore = new TextSearchStore<string>(vectorStore, collectionName: "calculation-formulas", vectorDimensions: 3072, searchOptions);
+            TextSearchProviderOptions textSearchProviderOptions = new TextSearchProviderOptions
+            {
+                SearchTime = TextSearchProviderOptions.RagBehavior.BeforeAIInvoke
+            };
+   
+            var textSearchProvider = new TextSearchProvider(textSearchStore,options: textSearchProviderOptions);      
             thread.AIContextProviders.Add(textSearchProvider);
             ChatMessageContent chatMessageContent = new(AuthorRole.User, message);           
             await foreach (ChatMessageContent response in agent.Item1.InvokeAsync(chatMessageContent, thread))

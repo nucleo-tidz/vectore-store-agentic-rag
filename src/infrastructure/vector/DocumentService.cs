@@ -20,6 +20,7 @@ namespace infrastructure.vector
         {
             var result = new List<TextSearchDocument>();            
             IEnumerable<string> chunks = TextChunker.SplitPlainTextLines(content, 50);
+           
             foreach (string chunk in chunks)
             {
 
