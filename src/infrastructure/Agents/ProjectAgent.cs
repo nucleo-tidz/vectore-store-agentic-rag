@@ -31,8 +31,7 @@ namespace infrastructure.Agents
 
             TextSearchStoreOptions searchOptions = new TextSearchStoreOptions
             {
-                SearchNamespace= "calculation/rules",
-                
+                SearchNamespace= "calculation/rules",                
             };
             using var textSearchStore = new TextSearchStore<string>(vectorStore, collectionName: "calculation-formulas", vectorDimensions: 3072, searchOptions);
             TextSearchProviderOptions textSearchProviderOptions = new TextSearchProviderOptions
