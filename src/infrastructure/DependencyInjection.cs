@@ -21,7 +21,7 @@ namespace infrastructure
         {
             services
                 .AddSemanticKernel(configuration).
-                AddTransient<IProjectAgent, ProjectAgent>();               
+                AddTransient<IProjectAgent, ProjectAgent>().AddAgent(configuration);               
                return services;
         }
         public static IServiceCollection AddSemanticKernel(this IServiceCollection services, IConfiguration configuration)
