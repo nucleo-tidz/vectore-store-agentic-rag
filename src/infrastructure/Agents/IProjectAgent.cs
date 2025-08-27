@@ -2,6 +2,6 @@
 {
     public interface IProjectAgent
     {
-        Task<string> Execute(string message);
+        Task<string> Execute(string input, string userName, string threadId);
     }
 }

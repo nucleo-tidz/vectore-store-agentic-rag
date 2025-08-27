@@ -1,5 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
+using Azure.AI.Agents.Persistent;
+
 using Microsoft.Extensions.AI;
 using Microsoft.Extensions.Configuration;
 using Microsoft.SemanticKernel;
@@ -14,9 +16,9 @@ using StackExchange.Redis;
 namespace infrastructure.Agents
 {
     [Experimental("SKEXP0110")]
-    public class ProjectAgent(Kernel _kernel, IConfiguration configuration) : AgentBase(_kernel, configuration), IProjectAgent
+    public class ProjectAgent(Kernel _kernel, IConfiguration configuration,PersistentAgentsClient persistentAgent) : AgentBase(_kernel, persistentAgent), IProjectAgent
     {
-        public async Task<string> Execute(string message)
+        public async Task<string> Execute(string input, string userName, string threadId)
         {
             var embedder = _kernel.GetRequiredService<IEmbeddingGenerator<string, Embedding<float>>>();
             var vectorStore =
@@ -27,7 +29,7 @@ namespace infrastructure.Agents
                     });
             string agentReply = string.Empty;
             var agent = base.GetAzureAgent(configuration["ProductAgentId"]);
-            AgentThread thread = new AzureAIAgentThread(agent.Item2);
+            AgentThread thread = string.IsNullOrEmpty(threadId) ? new AzureAIAgentThread(agent.Item2) : new AzureAIAgentThread(agent.Item2, threadId);
 
             TextSearchStoreOptions searchOptions = new TextSearchStoreOptions
             {
@@ -41,7 +43,7 @@ namespace infrastructure.Agents
    
             var textSearchProvider = new TextSearchProvider(textSearchStore,options: textSearchProviderOptions);      
             thread.AIContextProviders.Add(textSearchProvider);
-            ChatMessageContent chatMessageContent = new(AuthorRole.User, message);           
+            ChatMessageContent chatMessageContent = new(AuthorRole.User, input);           
             await foreach (ChatMessageContent response in agent.Item1.InvokeAsync(chatMessageContent, thread))
             {
                 agentReply = agentReply + response.Content;

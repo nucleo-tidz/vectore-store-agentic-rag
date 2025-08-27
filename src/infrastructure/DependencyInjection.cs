@@ -1,5 +1,9 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
+using Azure.AI.Agents.Persistent;
+using Azure.AI.Projects;
+using Azure.Identity;
+
 using infrastructure.Agents;
 using infrastructure.vector;
 
@@ -30,12 +34,12 @@ namespace infrastructure
                 (deploymentName: "text-embedding-3-large", endpoint: configuration["foundry-endpoint-embedder"],
                 apiKey: configuration["apikey-embedder"]);
 
-                kernelBuilder.Services.AddAzureOpenAIChatCompletion("gpt-4.1",
-                  configuration["foundry-endpoint-mini"],
-                  configuration["apikey-mini"],
-                   "gpt-4.1",
-                   "gpt-4.1");
-               
+                kernelBuilder.Services.AddAzureOpenAIChatCompletion("o4-mini",
+                 configuration["o4-mini-url"],
+                 configuration["o4-mini-key"],
+                  "o4-mini",
+                  "o4-mini");
+
                 kernelBuilder.Services.AddRedisVectorStore(configuration.GetConnectionString("redis"),new()
                 {
                     EmbeddingGenerator= kernelBuilder.Services.BuildServiceProvider().GetRequiredService<IEmbeddingGenerator<string, Embedding<float>>>(),
@@ -43,6 +47,30 @@ namespace infrastructure
                 kernelBuilder.Services.AddTransient<IDocumentService, DocumentService>();
                 return kernelBuilder.Build();
             });
+        }
+        public static IServiceCollection AddAgent(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.AddScoped(_ =>
+            {
+                var credential = new DefaultAzureCredential(
+                new DefaultAzureCredentialOptions
+                {
+                    ExcludeVisualStudioCredential = true,
+                    ExcludeEnvironmentCredential = true,
+                    ExcludeManagedIdentityCredential = true,
+                    ExcludeInteractiveBrowserCredential = false,
+                    ExcludeAzureCliCredential = false,
+                    ExcludeAzureDeveloperCliCredential = true,
+                    ExcludeAzurePowerShellCredential = true,
+                    ExcludeSharedTokenCacheCredential = true,
+                    ExcludeVisualStudioCodeCredential = true,
+                    ExcludeWorkloadIdentityCredential = true,
+
+                });
+                var projectClient = new AIProjectClient(new Uri(configuration["AgentProjectEndpoint"]), credential);
+                return projectClient.GetPersistentAgentsClient();
+            });
+            return services;
         }
     }
 }
