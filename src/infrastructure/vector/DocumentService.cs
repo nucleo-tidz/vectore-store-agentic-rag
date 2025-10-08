@@ -25,9 +25,9 @@ namespace infrastructure.vector
                 result.Add(new TextSearchDocument
                 {
                     Text = chunk,
-                    Namespaces = ["calculation/rules"],
-                    SourceLink = "Load Calculation.txt",
-                    SourceName = "Load Calculation.txt"
+                    Namespaces = ["Financial/result"],
+                    SourceLink = "Financial.txt",
+                    SourceName = "Financial.txt"
                 });
             }
             return result;
