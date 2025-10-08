@@ -20,6 +20,7 @@ namespace infrastructure.Agents
     {
         public async Task<string> Execute(string input, string userName, string threadId)
         {
+
             var embedder = _kernel.GetRequiredService<IEmbeddingGenerator<string, Embedding<float>>>();
             var vectorStore =
                 new RedisVectorStore(
@@ -35,13 +36,14 @@ namespace infrastructure.Agents
             {
                 SearchNamespace= "calculation/rules",                
             };
-            using var textSearchStore = new TextSearchStore<string>(vectorStore, collectionName: "calculation-formulas", vectorDimensions: 3072, searchOptions);
+            var textSearchStore = new TextSearchStore<string>(vectorStore, collectionName: "calculation-formulas", vectorDimensions: 3072, searchOptions);
             TextSearchProviderOptions textSearchProviderOptions = new TextSearchProviderOptions
             {
                 SearchTime = TextSearchProviderOptions.RagBehavior.BeforeAIInvoke
             };
    
-            var textSearchProvider = new TextSearchProvider(textSearchStore,options: textSearchProviderOptions);      
+            var textSearchProvider = new TextSearchProvider(textSearchStore,options: textSearchProviderOptions);   
+            
             thread.AIContextProviders.Add(textSearchProvider);
             ChatMessageContent chatMessageContent = new(AuthorRole.User, input);           
             await foreach (ChatMessageContent response in agent.Item1.InvokeAsync(chatMessageContent, thread))
