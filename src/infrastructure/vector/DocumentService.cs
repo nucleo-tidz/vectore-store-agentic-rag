@@ -11,24 +11,22 @@ namespace infrastructure.vector
     {
         public async Task SaveAsync(string content)
         {
-            using var textSearchStore = new TextSearchStore<string>(vectorStore, collectionName: "calculation", vectorDimensions: 3072, new()
-            { SearchNamespace = "calculation/r1" });
-          
+            using var textSearchStore = new TextSearchStore<string>(vectorStore, collectionName: "formuala", vectorDimensions: 3072, new() { SearchNamespace = "calculation/rules" });
+
             await textSearchStore.UpsertDocumentsAsync(Chunk(content));
         }
         private IEnumerable<TextSearchDocument> Chunk(string content)
         {
-            var result = new List<TextSearchDocument>();            
+            var result = new List<TextSearchDocument>();
             IEnumerable<string> chunks = TextChunker.SplitPlainTextLines(content, 50);
-           
             foreach (string chunk in chunks)
             {
 
                 result.Add(new TextSearchDocument
                 {
                     Text = chunk,
-                    Namespaces = ["calculation/r1"],
-                    SourceLink= "Load Calculation.txt",
+                    Namespaces = ["calculation/rules"],
+                    SourceLink = "Load Calculation.txt",
                     SourceName = "Load Calculation.txt"
                 });
             }

@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using System.Threading;
 
 using Azure.AI.Agents.Persistent;
 
@@ -74,10 +75,10 @@ namespace infrastructure.Agents
                 new RedisVectorStore(
                     ConnectionMultiplexer.Connect(configuration.GetConnectionString("redis")).GetDatabase(), new()
                     {
-                        EmbeddingGenerator = embedder,
+                        EmbeddingGenerator = embedder                      
                     });
-            using var textSearchStore = new TextSearchStore<string>(vectorStore, collectionName: "calculation", vectorDimensions: 3072, new() { SearchNamespace = "calculation/r1" });
-            var agentKernel = _kernel.Clone();
+            using var textSearchStore = new TextSearchStore<string>(vectorStore, collectionName: "formuala", vectorDimensions: 3072, new() { SearchNamespace = "calculation/rules" });
+            var textSearchProvider = new TextSearchProvider(textSearchStore);
             ChatCompletionAgent agent =
            new()
            {
@@ -87,9 +88,7 @@ namespace infrastructure.Agents
            };
             string agentReply = string.Empty;
             ChatHistoryAgentThread agentThread = new();
-            var textSearchProvider = new TextSearchProvider(textSearchStore);
             agentThread.AIContextProviders.Add(textSearchProvider);
-
             // how much is the specialhandling fees
             ChatMessageContent chatMessageContent = new(AuthorRole.User, input);
             await foreach (ChatMessageContent response in agent.InvokeAsync(chatMessageContent, agentThread))
