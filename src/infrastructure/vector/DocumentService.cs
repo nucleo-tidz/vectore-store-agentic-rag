@@ -15,15 +15,15 @@ namespace infrastructure.vector
     {
         public async Task SaveAsync()
         {
-            using var textSearchStore = new TextSearchStore<string>(vectorStore, collectionName: "product-desc", vectorDimensions: 3072, new()
-            { SearchNamespace = "group/desc" });
+            using var textSearchStore = new TextSearchStore<string>(vectorStore, collectionName: "Financial-data", vectorDimensions: 3072, new()
+            { SearchNamespace = "financial/desc" });
             
             await textSearchStore.UpsertDocumentsAsync(Chunk());
         }
         private IEnumerable<TextSearchDocument> Chunk()
         {
             var result = new List<TextSearchDocument>();
-            string data = File.ReadAllText("C:\\Workspace\\nucleo-tidz\\agentic-rag\\src\\Files\\product.txt");
+            string data = File.ReadAllText("C:\\Workspace\\nucleo-tidz\\agentic-rag\\src\\Files\\Financial.txt");
             IEnumerable<string> chunks = TextChunker.SplitPlainTextLines(data, 50);
             foreach (string chunk in chunks)
             {
@@ -31,12 +31,13 @@ namespace infrastructure.vector
                 result.Add(new TextSearchDocument
                 {
                     Text = chunk,
-                    Namespaces = ["group/personal"],
-                    SourceLink= "C:\\Workspace\\nucleo-tidz\\agentic-rag\\src\\Files\\product.txt",
-                    SourceName = "Ahmar.txt"
+                    Namespaces = ["financial/desc"],
+                    SourceLink= "C:\\Workspace\\nucleo-tidz\\agentic-rag\\src\\Files\\Financial.txt",
+                    SourceName = "Financial.txt"
                 });
             }
             return result;
         }
     }
 }
+

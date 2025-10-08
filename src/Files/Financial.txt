@@ -1,0 +1,25 @@
+Contoso Corporation is a multinational manufacturing and sales company headquartered in Paris, France. 
+The company offers over 100,000 products across consumer electronics, industrial machinery, and retail divisions.
+
+Financial Results for Contoso Corporation - 2024:
+Income: EUR 154,000,000
+Expenses: EUR 142,000,000
+Net Profit: EUR 12,000,000
+
+Financial Results for Contoso Corporation - 2023:
+Income: EUR 174,000,000
+Expenses: EUR 152,000,000
+Net Profit: EUR 22,000,000
+
+Financial Results for Contoso Corporation - 2022:
+Income: EUR 184,000,000
+Expenses: EUR 162,000,000
+Net Profit: EUR 22,000,000
+
+AdventureWorks is a major U.S.-based company specializing in adventure parks, outdoor gear, and family entertainment centers. 
+It operates more than 80 facilities across North America.
+
+Financial Results for AdventureWorks - 2021:
+Income: USD 223,000,000
+Expenses: USD 210,000,000
+Net Profit: USD 13,000,000
