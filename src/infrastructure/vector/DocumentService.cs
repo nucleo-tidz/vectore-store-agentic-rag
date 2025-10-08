@@ -11,7 +11,7 @@ namespace infrastructure.vector
     {
         public async Task SaveAsync(string content)
         {
-            using var textSearchStore = new TextSearchStore<string>(vectorStore, collectionName: "formuala", vectorDimensions: 3072, new() { SearchNamespace = "calculation/rules" });
+            using var textSearchStore = new TextSearchStore<string>(vectorStore, collectionName: "formuala", vectorDimensions: 3072);
 
             await textSearchStore.UpsertDocumentsAsync(Chunk(content));
         }

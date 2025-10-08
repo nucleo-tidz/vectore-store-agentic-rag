@@ -77,8 +77,9 @@ namespace infrastructure.Agents
                     {
                         EmbeddingGenerator = embedder                      
                     });
-            using var textSearchStore = new TextSearchStore<string>(vectorStore, collectionName: "formuala", vectorDimensions: 3072, new() { SearchNamespace = "calculation/rules" });
-            var textSearchProvider = new TextSearchProvider(textSearchStore);
+            using var textSearchStore = new TextSearchStore<string>(vectorStore, collectionName: "formuala", vectorDimensions: 3072);
+            var textSearchProvider = new TextSearchProvider(textSearchStore);      
+
             ChatCompletionAgent agent =
            new()
            {
