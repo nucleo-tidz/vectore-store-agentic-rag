@@ -8,6 +8,7 @@ using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.Agents;
 using Microsoft.SemanticKernel.Agents.AzureAI;
 using Microsoft.SemanticKernel.ChatCompletion;
+using Microsoft.SemanticKernel.Connectors.InMemory;
 using Microsoft.SemanticKernel.Connectors.Redis;
 using Microsoft.SemanticKernel.Data;
 
@@ -28,28 +29,27 @@ namespace infrastructure.Agents
                     {
                         EmbeddingGenerator = embedder,
                     });
-            string agentReply = string.Empty;
-            var agent = base.GetAzureAgent(configuration["ProductAgentId"]);
-            AgentThread thread = new AzureAIAgentThread(agent.Item2);
 
-            TextSearchStoreOptions searchOptions = new TextSearchStoreOptions
+            string agentReply = string.Empty;            
+
+            ChatCompletionAgent agent = new()
             {
-                SearchNamespace= "calculation/rules",                
+                Name = "Agent",
+                Instructions = "you are a friendly agent",
+                Kernel = _kernel,
             };
-            var textSearchStore = new TextSearchStore<string>(vectorStore, collectionName: "calculation-formulas", vectorDimensions: 3072, searchOptions);
-            TextSearchProviderOptions textSearchProviderOptions = new TextSearchProviderOptions
-            {
-                SearchTime = TextSearchProviderOptions.RagBehavior.BeforeAIInvoke
-            };
-   
-            var textSearchProvider = new TextSearchProvider(textSearchStore,options: textSearchProviderOptions);   
-            
-            thread.AIContextProviders.Add(textSearchProvider);
-            ChatMessageContent chatMessageContent = new(AuthorRole.User, input);           
-            await foreach (ChatMessageContent response in agent.Item1.InvokeAsync(chatMessageContent, thread))
+
+            ChatHistoryAgentThread agentThread = new();
+            var textSearchStore = new TextSearchStore<string>(vectorStore, collectionName: "calculation", vectorDimensions: 3072, new() { SearchNamespace = "calculation/r1", });
+            var textSearchProvider = new TextSearchProvider(textSearchStore);
+       
+            agentThread.AIContextProviders.Add(textSearchProvider);
+            ChatMessageContent chatMessageContent = new(AuthorRole.User, input); 
+            await foreach (ChatMessageContent response in agent.InvokeAsync(chatMessageContent, agentThread))
             {
                 agentReply = agentReply + response.Content;
             }
+
             return agentReply;
         }
     }
