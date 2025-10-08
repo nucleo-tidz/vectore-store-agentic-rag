@@ -13,7 +13,7 @@ namespace infrastructure.vector
         {
             using var textSearchStore = new TextSearchStore<string>(vectorStore, collectionName: "calculation-formulas", vectorDimensions: 3072, new()
             { SearchNamespace = "calculation/rules" });
-            
+          
             await textSearchStore.UpsertDocumentsAsync(Chunk(content));
         }
         private IEnumerable<TextSearchDocument> Chunk(string content)

@@ -35,10 +35,10 @@ namespace infrastructure
                 apiKey: configuration["apikey-embedder"]);
 
                 kernelBuilder.Services.AddAzureOpenAIChatCompletion("o4-mini",
-                 configuration["o4-mini-url"],
-                 configuration["o4-mini-key"],
-                  "o4-mini",
-                  "o4-mini");
+                      configuration["foundry-endpoint-mini"],
+                      configuration["apikey-mini"],
+                       "o4-mini",
+                       "o4-mini");
 
                 kernelBuilder.Services.AddRedisVectorStore(configuration.GetConnectionString("redis"),new()
                 {
