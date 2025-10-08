@@ -5,7 +5,9 @@ using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.Connectors.Redis;
 using Microsoft.SemanticKernel.Data;
 using Microsoft.SemanticKernel.Text;
+
 using StackExchange.Redis;
+
 using System.Diagnostics.CodeAnalysis;
 
 namespace infrastructure.vector
@@ -15,15 +17,15 @@ namespace infrastructure.vector
     {
         public async Task SaveAsync()
         {
-            using var textSearchStore = new TextSearchStore<string>(vectorStore, collectionName: "Financial-data", vectorDimensions: 3072, new()
-            { SearchNamespace = "financial/desc" });
-            
+            using var textSearchStore = new TextSearchStore<string>(vectorStore, collectionName: "product-desc", vectorDimensions: 3072, new()
+            { SearchNamespace = "group/desc" });
+
             await textSearchStore.UpsertDocumentsAsync(Chunk());
         }
         private IEnumerable<TextSearchDocument> Chunk()
         {
             var result = new List<TextSearchDocument>();
-            string data = File.ReadAllText("C:\\Workspace\\nucleo-tidz\\agentic-rag\\src\\Files\\Financial.txt");
+            string data = File.ReadAllText("C:\\Workspace\\nucleo-tidz\\agentic-rag\\src\\Files\\product.txt");
             IEnumerable<string> chunks = TextChunker.SplitPlainTextLines(data, 50);
             foreach (string chunk in chunks)
             {
@@ -31,13 +33,12 @@ namespace infrastructure.vector
                 result.Add(new TextSearchDocument
                 {
                     Text = chunk,
-                    Namespaces = ["financial/desc"],
-                    SourceLink= "C:\\Workspace\\nucleo-tidz\\agentic-rag\\src\\Files\\Financial.txt",
-                    SourceName = "Financial.txt"
+                    Namespaces = ["group/personal"],
+                    SourceLink = "C:\\Workspace\\nucleo-tidz\\agentic-rag\\src\\Files\\product.txt",
+                    SourceName = "Ahmar.txt"
                 });
             }
             return result;
         }
     }
 }
-

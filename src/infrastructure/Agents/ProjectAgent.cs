@@ -38,29 +38,13 @@ namespace infrastructure.Agents
             var textSearchProvider = new TextSearchProvider(textSearchStore);
             thread.AIContextProviders.Add(vectorSearchProvider);
             thread.AIContextProviders.Add(textSearchProvider);
-
-            //// File 
-            TextSearchStoreOptions searchOptions = new TextSearchStoreOptions
-            {
-                SearchNamespace = "calculation/rules",
-            };
-
-            using var fileSearchStore = new TextSearchStore<string>(vectorStore, collectionName: "Financial-data", vectorDimensions: 3072, searchOptions);
-            TextSearchProviderOptions textSearchProviderOptions = new TextSearchProviderOptions
-            {
-                SearchTime = TextSearchProviderOptions.RagBehavior.BeforeAIInvoke
-            };
-
-            var fileSearchProvider = new TextSearchProvider(fileSearchStore, options: textSearchProviderOptions);
-            thread.AIContextProviders.Add(fileSearchProvider);
-
             ChatMessageContent chatMessageContent = new(AuthorRole.User, message);
-           
+
             await foreach (ChatMessageContent response in agent.Item1.InvokeAsync(chatMessageContent, thread))
             {
                 agentReply = agentReply + response.Content;
             }
-       
+
             return agentReply;
         }
     }
