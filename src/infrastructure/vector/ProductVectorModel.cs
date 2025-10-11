@@ -37,7 +37,8 @@ namespace infrastructure.vector
             {
                 return new TextSearchResult(value: dataModel.Description)
                 {
-                   // Name = dataModel.productId.ToString()
+                    Name = dataModel.productNameName.ToString(),
+
                 };
             }
             throw new ArgumentException("Invalid result type.");
