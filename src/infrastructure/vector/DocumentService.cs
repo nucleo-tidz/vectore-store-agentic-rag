@@ -17,10 +17,11 @@ namespace infrastructure.vector
     {
         public async Task SaveAsync()
         {
-            using var textSearchStore = new TextSearchStore<string>(vectorStore, collectionName: "product-desc", vectorDimensions: 3072, new()
-            { SearchNamespace = "group/desc" });
+            using var textSearchStore = new TextSearchStore<string>(vectorStore, collectionName: "product-desc", vectorDimensions: 3072);
 
             await textSearchStore.UpsertDocumentsAsync(Chunk());
+            //var data = await textSearchStore.SearchAsync("what is Financial Results for Contoso Corporation",);
+            //var k = await data.Results.ToListAsync();
         }
         private IEnumerable<TextSearchDocument> Chunk()
         {

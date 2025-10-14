@@ -1,13 +1,9 @@
-﻿using Azure.AI.Projects;
-using Azure.Identity;
+﻿using System.Diagnostics.CodeAnalysis;
+
 using Microsoft.Extensions.AI;
-using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.VectorData;
-using Microsoft.SemanticKernel;
-using Microsoft.SemanticKernel.Connectors.Redis;
-using Microsoft.SemanticKernel.Data;
+
 using model;
-using System.Diagnostics.CodeAnalysis;
 
 namespace infrastructure.vector
 {
